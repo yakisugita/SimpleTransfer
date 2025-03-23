@@ -26,7 +26,7 @@ app.post("/", async (c:any) => {
   const uuid = crypto.randomUUID()
   await c.env.MY_STORAGE.put(uuid, file.stream())
 
-  const fileHash = await file.arrayBuffer()
+  const fileHash = await getHash(await file.arrayBuffer())
   // fileIdとハッシュを返す
   return c.json({ uuid: uuid, hash: fileHash })
 })
