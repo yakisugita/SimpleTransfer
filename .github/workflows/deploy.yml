@@ -11,8 +11,13 @@ jobs:
     name: Deploy
     steps:
       - uses: actions/checkout@v4
+
+      # wrangler-action v3.91以降を使うための処理
+      - name: Install
+        run: npm install
+
       - name: Deploy
-        uses: cloudflare/wrangler@v4
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
