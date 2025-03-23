@@ -33,13 +33,12 @@ app.post("/", async (c:any) => {
 
 // ダウンロード
 app.get("/", async (c:any) => {
-  console.log(`hashCorrect : ${c.env.KEY_SHA256}`)
   const fileId = c.req.query("fileId")
   const hash = c.req.query("hash")
 
   if (!fileId || !hash) return c.text("Missing parameters", 400)
 
-  const object = await c.MY_STORAGE.get(fileId)
+  const object = await c.env.MY_STORAGE.get(fileId)
   if (!object) return c.text("File not found", 404)
 
   const fileBuffer = await object.arrayBuffer()
