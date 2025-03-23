@@ -27,13 +27,14 @@ app.post("/", async (c:any) => {
   await c.env.MY_STORAGE.put(uuid, file.stream())
 
   const fileHash = await getHash(await file.arrayBuffer())
-  // fileIdとハッシュを返す
-  return c.json({ uuid: uuid, hash: fileHash })
+  const url = new URL(c.req.url)
+  // fileIdとハッシュ、URLを返す
+  return c.json({ uuid: uuid, hash: fileHash, url: `${url.origin}${url.pathname}?id=${uuid}&hash=${fileHash}` })
 })
 
 // ダウンロード
 app.get("/", async (c:any) => {
-  const fileId = c.req.query("fileId")
+  const fileId = c.req.query("id")
   const hash = c.req.query("hash")
 
   if (!fileId || !hash) return c.text("Missing parameters", 400)
