@@ -1,12 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "simpletransfer",
+  "name": "simple-transfer",
   "main": "src/index.ts",
   "compatibility_date": "2025-03-22",
   "assets": {
     "directory": "./public",
     "binding": "ASSETS"
-  }
+  },
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
@@ -19,12 +19,12 @@
   //     "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   //   }
   // ],
-  // "r2_buckets": [
-  //   {
-  //     "binding": "MY_BUCKET",
-  //     "bucket_name": "my-bucket"
-  //   }
-  // ],
+  "r2_buckets": [
+    {
+      "binding": "MY_STORAGE",
+      "bucket_name": "simple-transfer-storage"
+    }
+  ],
   // "d1_databases": [
   //   {
   //     "binding": "MY_DB",
@@ -35,8 +35,8 @@
   // "ai": {
   //   "binding": "AI"
   // },
-  // "observability": {
-  //   "enabled": true,
-  //   "head_sampling_rate": 1
-  // }
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
 }
