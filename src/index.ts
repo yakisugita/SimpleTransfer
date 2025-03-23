@@ -67,4 +67,19 @@ async function getHash(original:string | ArrayBuffer) {
   return hashed
 }
 
-export default app
+const scheduled: ExportedHandlerScheduledHandler<Bindings> = async (event, env, ctx) => {
+  const list = await env.MY_STORAGE.list()
+  const now = Date.now()
+  for (const obj of list.objects) {
+    console.log(obj)
+    // アップロードから30日以上経過したファイルは削除
+    if (now - obj.uploaded.getTime() > 30 * 24 * 60 * 60 * 1000) {
+      await env.MY_STORAGE.delete(obj.key)
+    }
+  }
+}
+
+export default {
+  fetch: app.fetch,
+  scheduled,
+}
